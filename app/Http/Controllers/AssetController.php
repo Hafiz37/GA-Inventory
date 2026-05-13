@@ -8,13 +8,25 @@ use App\Models\Category; // Penting: untuk memanggil Model Category
 
 class AssetController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // Mengambil semua data aset beserta kategorinya (Eager Loading)
-        $assets = Asset::with('category')->get();
+        $query = Asset::with('category');
 
-        // Mengirim data ke view 'assets.index'
-        return view('assets.index', compact('assets'));
+        // Fitur Search (Berdasarkan Nama atau Serial Number)
+        if ($request->has('search') && $request->search != '') {
+            $query->where('name', 'like', '%' . $request->search . '%')
+                ->orWhere('serial_number', 'like', '%' . $request->search . '%');
+        }
+
+        // Fitur Filter Kategori
+        if ($request->has('category_id') && $request->category_id != '') {
+            $query->where('category_id', $request->category_id);
+        }
+
+        $assets = $query->latest()->get();
+        $categories = \App\Models\Category::all(); // Untuk dropdown filter
+
+        return view('assets.index', compact('assets', 'categories'));
     }
 
     public function create() {
@@ -35,8 +47,8 @@ class AssetController extends Controller
     }
 
     public function edit(Asset $asset) {
-    $categories = Category::all();
-    return view('assets.edit', compact('asset', 'categories'));
+        $categories = Category::all();
+        return view('assets.edit', compact('asset', 'categories'));
     }
 
     public function update(Request $request, Asset $asset) {
