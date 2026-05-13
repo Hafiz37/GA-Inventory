@@ -14,6 +14,14 @@ class AssetResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'nama_barang' => $this->name,
+            'kategori' => $this->category->name,
+            'merk' => $this->brand,
+            'stok' => $this->stock,
+            'status' => $this->status,
+            'dibuat_pada' => $this->created_at->format('d-m-Y'),
+        ];
     }
 }
