@@ -1,58 +1,184 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📦 GA Inventory — Sistem Manajemen Inventaris Aset
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi web manajemen inventaris aset berbasis **Laravel 13** untuk kebutuhan General Affairs (GA). Dibangun untuk mempermudah pencatatan, pencarian, dan pengelolaan barang/aset kantor secara efisien.
 
-## About Laravel
+🌐 **Live Demo:** [https://ga-inventory.rf.gd](https://ga-inventory.rf.gd)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## ✨ Fitur Utama
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Manajemen Aset** — Tambah, edit, dan hapus data aset dengan mudah
+- **Kategori Aset** — Pengelompokan aset berdasarkan kategori (Alat Jaringan, Laptop & PC, Alat Teknik, dll.)
+- **Filter & Pencarian** — Cari aset berdasarkan nama / serial number, dan filter berdasarkan kategori
+- **Alert Stok Menipis** — Notifikasi otomatis ketika stok aset ≤ 5 unit
+- **Status Aset** — Lacak status barang: `Tersedia`, `Dipakai`, atau `Rusak`
+- **REST API** — Endpoint JSON untuk mengakses data aset (`/api/assets`)
+- **Konfirmasi Hapus** — Dialog konfirmasi berbasis SweetAlert2 sebelum menghapus data
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 🛠️ Teknologi yang Digunakan
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| Teknologi | Versi | Keterangan |
+|-----------|-------|------------|
+| PHP | ^8.3 | Bahasa pemrograman utama |
+| Laravel | ^13.7 | Framework backend |
+| Laravel Sanctum | ^4.0 | Autentikasi API |
+| SQLite | — | Database default |
+| Bootstrap | 5.3 | UI framework (via CDN) |
+| Font Awesome | 6.4 | Ikon (via CDN) |
+| SweetAlert2 | 11 | Dialog konfirmasi (via CDN) |
+| Tailwind CSS | ^4.0 | Utility CSS (build tool) |
+| Vite | ^8.0 | Asset bundler |
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+---
 
-## Agentic Development
+## 🗂️ Struktur Database
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+### Tabel `categories`
+| Kolom | Tipe | Keterangan |
+|-------|------|------------|
+| id | bigint | Primary key |
+| name | string | Nama kategori |
+| type | string (nullable) | Tipe kategori |
+| description | text (nullable) | Deskripsi kategori |
+| timestamps | — | created_at, updated_at |
+
+### Tabel `assets`
+| Kolom | Tipe | Keterangan |
+|-------|------|------------|
+| id | bigint | Primary key |
+| category_id | foreignId | Relasi ke tabel categories |
+| name | string | Nama aset |
+| brand | string (nullable) | Merk/brand |
+| serial_number | string (nullable, unique) | Nomor seri |
+| status | enum | `Tersedia`, `Dipakai`, `Rusak` |
+| held_by | string (nullable) | Pemegang/lokasi aset |
+| stock | integer | Jumlah stok |
+| notes | text (nullable) | Catatan tambahan |
+| timestamps | — | created_at, updated_at |
+
+---
+
+## 🚀 Instalasi Lokal
+
+### Prasyarat
+- PHP >= 8.3
+- Composer
+- Node.js & NPM
+
+### Langkah-langkah
 
 ```bash
-composer require laravel/boost --dev
+# 1. Clone repositori
+git clone https://github.com/username/ga-inventory.git
+cd ga-inventory
 
-php artisan boost:install
+# 2. Install dependensi PHP
+composer install
+
+# 3. Salin file environment
+cp .env.example .env
+
+# 4. Generate app key
+php artisan key:generate
+
+# 5. Jalankan migrasi dan seeder
+php artisan migrate --seed
+
+# 6. Install dependensi Node.js dan build asset
+npm install
+npm run build
+
+# 7. Jalankan server lokal
+php artisan serve
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Akses aplikasi di `http://localhost:8000`
 
-## Contributing
+> **Catatan:** Aplikasi menggunakan SQLite secara default. Pastikan file `database/database.sqlite` sudah ada, atau buat dengan perintah `touch database/database.sqlite` sebelum menjalankan migrasi.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## 🔌 API Endpoint
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Base URL: `https://ga-inventory.rf.gd/api`
 
-## Security Vulnerabilities
+| Method | Endpoint | Deskripsi |
+|--------|----------|-----------|
+| GET | `/api/assets` | Mengambil semua data aset |
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Contoh Response
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "nama_barang": "Router MikroTik RB4011",
+      "kategori": "Alat Jaringan",
+      "merk": "MikroTik",
+      "stok": 3,
+      "status": "Tersedia",
+      "dibuat_pada": "10-05-2026"
+    }
+  ]
+}
+```
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 📁 Struktur Direktori Penting
+
+```
+ga-inventory/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── AssetController.php        # CRUD aset (web)
+│   │   │   └── Api/AssetApiController.php # API endpoint
+│   │   └── Resources/
+│   │       └── AssetResource.php          # Transformasi response API
+│   └── Models/
+│       ├── Asset.php                      # Model aset + scope lowStock
+│       └── Category.php                   # Model kategori
+├── database/
+│   ├── migrations/                        # Skema database
+│   └── seeders/                           # Data awal (kategori & aset)
+├── resources/views/
+│   ├── layouts/app.blade.php              # Layout utama + sidebar
+│   └── assets/                            # Halaman CRUD aset
+└── routes/
+    ├── web.php                            # Rute web
+    └── api.php                            # Rute API
+```
+
+---
+
+## 🌱 Data Awal (Seeder)
+
+Seeder bawaan menyediakan:
+
+**Kategori:**
+- Alat Jaringan (Elektronik)
+- Laptop & PC (Elektronik)
+- Alat Teknik (Perkakas)
+
+**Aset Contoh:**
+- Router MikroTik RB4011
+- Macbook Pro M2
+
+Jalankan ulang seeder dengan:
+```bash
+php artisan migrate:fresh --seed
+```
+
+---
+
+## 📄 Lisensi
+
+Proyek ini dibuat untuk kebutuhan internal General Affairs. Silakan digunakan dan dikembangkan sesuai kebutuhan.
+
+---
+
+> Dibuat dengan ❤️ menggunakan [Laravel](https://laravel.com)
