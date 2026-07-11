@@ -1172,3 +1172,39 @@ Kelas : TIF - 6A
     *   Saat ini, method [index](file:///c:/Users/User/Downloads/UASPWF/GA-Inventory/app/Http/Controllers/AssetController.php#L11-L30) di [AssetController.php](file:///c:/Users/User/Downloads/UASPWF/GA-Inventory/app/Http/Controllers/AssetController.php) mengambil seluruh data menggunakan `->get()`. Ketika jumlah aset bertambah banyak, ini bisa memberatkan performa halaman. Sebaiknya gunakan `->paginate(10)` atau sejenisnya.
 3.  **Keamanan API:**
     *   Rute API `/api/assets` di [api.php](file:///c:/Users/User/Downloads/UASPWF/GA-Inventory/routes/api.php#L15) belum terlindungi (tanpa middleware auth). Jika nanti ada rencana mempublikasikan aplikasi ini secara luas, disarankan menggunakan otentikasi seperti *Laravel Sanctum*.
+
+---
+
+## REVIEW BY SALMA
+NAMA = SALMA NUR RAHMAWATI
+NIM = 2305101006
+
+### **Review Singkat Pembaruan (Update) Proyek**
+
+#### 1. **Perubahan & Penyempurnaan Tampilan (UI/UX)**
+Desain lama yang berbasis Bootstrap standar telah dirombak menjadi tampilan modern bertema gelap (**Dark Theme**) yang mewah dan konsisten:
+- **Tema Visual & Palette:** Menggunakan variabel CSS kustom (`--bg-main`, `--bg-card`, etc.) untuk menghasilkan desain *glassmorphism* modern dengan transisi yang halus, efek *glow* pada *focus field*, dan gradien tombol yang cantik.
+- **Layout & Sidebar Baru:** Area navigasi kini dilengkapi logo, indikator status sistem `"System Online"`, dan *breadcrumb* navigasi dinamis beserta informasi tanggal otomatis di *topbar*.
+- **Tabel & Konten Aset:**
+  - Kolom Nama Aset kini menampilkan nama, merek (*brand*), dan Serial Number secara terstruktur.
+  - Status aset menggunakan indikator titik warna (Hijau: Tersedia, Kuning: Dipakai, Merah: Rusak).
+  - Peringatan stok menipis (<= 5) otomatis ditandai dengan warna merah transparan.
+  - Dilengkapi status kosong (*Empty State*) yang estetis dengan ikon bila data tidak ditemukan.
+- **Integrasi SweetAlert2:** Dialog konfirmasi penghapusan dan notifikasi sukses telah disesuaikan agar serasi dengan tema gelap aplikasi.
+
+#### 2. **Pembersihan Logika Routing (`routes/web.php`)**
+- Disediakan *redirect* otomatis dari halaman utama (`/`) ke halaman daftar aset (`assets.index`). Hal ini mencegah *error* 404 ketika pengguna pertama kali mengakses *root* URL.
+- Struktur pemanggilan kelas `Route` didefinisikan dengan lebih rapi.
+
+#### 3. **Penyempurnaan Form Tambah & Edit**
+- Grid formulir diatur lebih seimbang (`col-md-7`, `col-md-5`, `col-md-4`) untuk memisahkan input data krusial seperti Nama Barang, Brand, Kategori, Serial Number, Status, Jumlah Stok, Pemegang Aset, dan Catatan.
+- Label form dilengkapi tanda bintang merah (`*`) untuk memperjelas kolom yang wajib diisi (*required fields*).
+- Tombol aksi dibedakan secara visual (Ungu/Indigo untuk "Simpan Aset Baru", dan Hijau untuk "Update Aset").
+
+#### 4. **Pembaruan Dokumentasi (`README.md`)**
+- Konten `README.md` diperbarui secara masif dan sangat detail:
+  - Manfaat dan fitur utama proyek.
+  - Tautan demo langsung (*Live Demo*): [https://ga-inventory.rf.gd](https://ga-inventory.rf.gd).
+  - Panduan antarmuka disertai deskripsi detail dari *screenshots* fitur.
+  - Struktur direktori lengkap, skema relasi database (ERD), dan tabel migrasi.
+  - Panduan instalasi dan persiapan lokal (*step-by-step* menggunakan SQLite) yang sangat mudah diikuti.
