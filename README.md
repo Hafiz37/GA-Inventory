@@ -1208,3 +1208,13 @@ Desain lama yang berbasis Bootstrap standar telah dirombak menjadi tampilan mode
   - Panduan antarmuka disertai deskripsi detail dari *screenshots* fitur.
   - Struktur direktori lengkap, skema relasi database (ERD), dan tabel migrasi.
   - Panduan instalasi dan persiapan lokal (*step-by-step* menggunakan SQLite) yang sangat mudah diikuti.
+
+ ---
+
+## REVIEW BY SHABILLA
+NAMA = SHABILLA BERLIANA HARYONO
+NIM = 2305101149
+
+### **Review Singkat Proyek**
+- Desain simpel sehingga mudah dipahami dan pada dashboard memuat semua informasi.
+- Jika bisa tambahkan gambar produk atau aset agar jika tidak memahami alat tersebut dapat mengetahui dengan gambar
