@@ -1208,3 +1208,29 @@ Desain lama yang berbasis Bootstrap standar telah dirombak menjadi tampilan mode
   - Panduan antarmuka disertai deskripsi detail dari *screenshots* fitur.
   - Struktur direktori lengkap, skema relasi database (ERD), dan tabel migrasi.
   - Panduan instalasi dan persiapan lokal (*step-by-step* menggunakan SQLite) yang sangat mudah diikuti.
+
+---
+
+## REVIEW BY MOHAMMAD IMAM TOHARI
+NAMA = mohammad imam tohari
+NIM = 2305101123
+
+### **Review Singkat Pembaruan (Update) Proyek**
+
+#### 1. **Teknologi Utama (Tech Stack)**
+Proyek ini menggunakan **Laravel 13** dengan database **SQLite** (file-based) yang sangat efisien untuk development lokal. Untuk frontend menggunakan **Bootstrap 5.3** (via CDN) dengan kustomisasi CSS modern bertema gelap (**Dark Theme**) dan **Tailwind CSS ^4.0** yang dikelola melalui **Vite ^8.0**. Endpoint REST API juga telah didukung menggunakan **Laravel Sanctum**.
+
+#### 2. **Fitur Utama yang Berhasil Diimplementasikan**
+*   **CRUD Aset Lengkap:** Penambahan, pembaruan, penampilan, dan penghapusan aset kantor berjalan secara dinamis.
+*   **Pencarian dan Filter Kategori:** Memudahkan pencarian aset berdasarkan nama atau nomor seri, serta pengelompokan berdasarkan kategori.
+*   **Sistem Notifikasi Stok Menipis (*Low Stock Alert*):** Deteksi otomatis jika stok $\le$ 5 unit dengan penanda baris tabel berwarna merah transparan.
+*   **REST API Endpoint (`/api/assets`):** Mengembalikan data koleksi aset dalam format JSON terstruktur menggunakan `AssetResource`.
+*   **Konfirmasi SweetAlert2:** Proses penghapusan data aset dilindungi dengan dialog konfirmasi yang estetis.
+
+#### 3. **Struktur Database & Relasi**
+Hubungan antara tabel `assets` dan `categories` didefinisikan dengan relasi *Many-to-One* (atau *One-to-Many* sebaliknya) dengan constraint `onDelete('cascade')`. Database seeder (`CategorySeeder` & `AssetSeeder`) telah dikonfigurasi untuk memudahkan pengisian data simulasi awal.
+
+#### 4. **Rekomendasi / Saran Peningkatan**
+*   **Validasi pada Update:** Method `update()` di `AssetController` saat ini langsung memproses data input tanpa validasi ketat seperti pada method `store()`. Disarankan menambahkan validasi serupa demi keamanan data.
+*   **Paginasi Data:** Mengubah `->get()` pada daftar aset menjadi `->paginate(N)` untuk mengantisipasi penurunan performa saat volume data aset membesar.
+*   **Keamanan API:** Mengaktifkan middleware `auth:sanctum` untuk melindungi endpoint `/api/assets` sebelum di-deploy ke production.
