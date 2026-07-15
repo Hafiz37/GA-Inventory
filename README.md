@@ -1208,3 +1208,23 @@ Desain lama yang berbasis Bootstrap standar telah dirombak menjadi tampilan mode
   - Panduan antarmuka disertai deskripsi detail dari *screenshots* fitur.
   - Struktur direktori lengkap, skema relasi database (ERD), dan tabel migrasi.
   - Panduan instalasi dan persiapan lokal (*step-by-step* menggunakan SQLite) yang sangat mudah diikuti.
+
+---
+
+## REVIEW BY OKI
+NAMA = OKI SETIAWAN
+NIM = 2305101019
+
+### **Review Singkat Pembaruan (Update) Proyek**
+
+#### 1. **Implementasi Database & Fitur Low Stock Alert**
+- Relasi tabel antara `categories` dan `assets` (1:N) sudah terimplementasi dengan baik menggunakan foreign key `category_id`.
+- Adanya `scopeLowStock` pada Model `Asset` memudahkan pemanggilan query untuk aset dengan stok menipis (<= 5) secara efisien di level ORM Eloquent.
+
+#### 2. **Integrasi REST API & Resource Transformer**
+- Penyediaan endpoint `/api/assets` menggunakan `AssetResource` merupakan langkah yang baik untuk standarisasi format response JSON (seperti penyesuaian nama kolom dan format tanggal).
+
+#### 3. **Rekomendasi untuk Pengembangan Ke Depan**
+- **Validasi Data Edit:** Method `update` pada `AssetController` belum dilengkapi dengan validasi seperti pada method `store`. Disarankan untuk menambahkan validasi yang sama untuk menjaga integritas data.
+- **Paginasi Halaman:** Pengambilan data aset pada method `index` masih menggunakan `->get()`. Sebaiknya diubah menggunakan `->paginate(10)` untuk mengantisipasi performa saat data bertambah banyak.
+- **Keamanan API:** Disarankan menambahkan middleware autentikasi (seperti Laravel Sanctum) pada rute API `/api/assets` jika aplikasi ini dideploy ke server production.
