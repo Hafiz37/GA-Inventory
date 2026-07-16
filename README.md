@@ -1208,3 +1208,12 @@ Desain lama yang berbasis Bootstrap standar telah dirombak menjadi tampilan mode
   - Panduan antarmuka disertai deskripsi detail dari *screenshots* fitur.
   - Struktur direktori lengkap, skema relasi database (ERD), dan tabel migrasi.
   - Panduan instalasi dan persiapan lokal (*step-by-step* menggunakan SQLite) yang sangat mudah diikuti.
+
+---
+
+## Review
+By : Iqbal Safri Jalla (2505101060L)
+
+#### Review singkat penambahan fitur aplikasi
+- Aksesibilitas : Secara keseluruhan fungsi dan fitur aplikasi sudah lengkap dan user friendly atau mudah digunakan. Namun untuk opsi tema aplikasinya bisa dibuat untuk dapat menyesuaikan dari tema latar belakang dari device yang sedang digunakanoleh user.
+- Rekomendasi : Tambahkan fitur Import data aset dari template file Excel supaya ada variasi mass upload/update jadi tidak harus input atau update data secara manual satu per satu, selanjutnya fitur Export data PDF/Excel untuk pengambilan data dalam bentuk dokumen yang siap dicetak/diprint.
